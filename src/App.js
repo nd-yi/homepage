@@ -1,5 +1,9 @@
 import React, { useEffect, useRef } from 'react';
 import { BrowserView, MobileView, isBrowser, isMobile } from 'react-device-detect'
+import classNames from 'classnames';
+import DropMenu from './components/DropMenu';
+import Menu from './components/Menu';
+
 import { tns } from 'tiny-slider';
 import logo from './assets/images/img_logo.png';
 import telegram from './assets/images/telegram.png';
@@ -10,8 +14,14 @@ import ipRight from './assets/images/ip-right.png';
 import dcimbanner from './assets/images/dcimbanner.png';
 import line from './assets/images/line.png';
 import medium from './assets/images/medium.png';
+import tu1 from './assets/images/tu1.png';
+import tu2 from './assets/images/tu2.png';
+
 
 import di1 from './assets/images/di1.png';
+import bsc from './assets/images/bsc.png';
+
+import english from './assets/images/english.png';
 
 
 import logo1 from './assets/images/logo1.png';
@@ -39,17 +49,66 @@ import metaverse from './assets/images/metaverse.png';
 
 import './App.scss';
 
+const discordUrl = 'https://discord.gg/AYVkjX5s3d'
+const twitterUrl = 'https://twitter.com/ovo__official'
+const telegramUrl = 'https://t.me/OVO_Official'
+const lineUrl = 'https://bit.ly/2XjJ9jB'
+const mediumUrl = 'https://medium.com/@ovonft'
+
 const sliderImages = [banner1, banner2, banner3, banner4]
+const footerImageList = [
+  { imageUrl: discord, link: discordUrl },
+  { imageUrl: telegram, link: telegramUrl },
+  { imageUrl: twitter, link: twitterUrl },
+  { imageUrl: line, link: lineUrl },
+  { imageUrl: medium, link: mediumUrl },
+]
+
+const PartnersImages = [logo1, logo2, logo3, logo4, logo5, logo6, logo7, logo8, logo9, logo10, logo11, logo12, logo13]
+
+const activityProgressList = [
+  { date: '2023/3', active: true, position: 'right', info: 'Bring OVO NFT to metaverse'},
+  { date: '2022/10', active: false, position: 'left', info: 'NFT Defi and NFT mining'},
+  { date: '2022/6', active: false, position: 'right', info: 'Exhibition in Metaartia'},
+  { date: '2022/3', active: false, position: 'left', info: 'OVO AR NFT'},
+  { date: '2021/10', active: false, position: 'right', info: 'NFT fusion'},
+  { date: '2021/8', active: false, position: 'left', info: 'NFT main drop on Flow '},
+  { date: '2022/3', active: false, position: 'right', info: 'Launch another OVO website on Flow'},
+  { date: '2021/10', active: false, position: 'left', info: 'Nyathees Mystery Box'},
+  { date: '2021/8', active: false, position: 'right', info: 'Launch of OVO website on BSC'},
+
+]
 
 function App() {
   const eleRef = useRef(null)
+  
+  const homeRef = useRef(null)
+  const metaverseRef = useRef(null)
+  const dcimRef = useRef(null)
+  const arNftRef = useRef(null)
+  const roadMapRef = useRef(null)
+  const partnersRef = useRef(null)
+  const faqRef = useRef(null)
 
-  console.log('========================= ~ tns', tns)
+  const navList = [
+    { name: 'HOME', nodeRef: homeRef },
+    { name: 'METAVERSE', nodeRef: metaverseRef },
+    { name: 'DCIM', nodeRef: dcimRef },
+    { name: 'AR NFT', nodeRef: arNftRef },
+    { name: 'ROADMAP', nodeRef: roadMapRef },
+    { name: 'PARTNERS', nodeRef: partnersRef },
+    { name: 'FAQ', nodeRef: faqRef },
+  ]
+
+
+  const handleClickFAQ = (nodeRef) => {
+    if (nodeRef.current) {
+      nodeRef.current?.scrollIntoView({behavior: "smooth"});
+    }
+  }
 
   useEffect(() => {
-    console.log('===========44============== ~ useEffect ~ eleRef.current', eleRef.current)
     if (eleRef.current) {
-      console.log('===========77777============== ~ useEffect ~ eleRef.current', eleRef.current)
       tns({
         container: eleRef.current,
         items: 3,
@@ -67,31 +126,59 @@ function App() {
     }
     
   }, [])
-  const navList = ['HOME', 'METAVERSE', 'DCIM', 'AR NFT', 'ROADMAP', 'PARTNERS', 'FAQ']
-  const PartnersImages = [logo1, logo2, logo3, logo4, logo5, logo6, logo7, logo8, logo9, logo10, logo11, logo12, logo13]
 
   return (
     <div className="App">
-      <section className='first-section'>
+      <section className={classNames('first-section', {'first-section-mobile': isMobile, 'first-section-pc' : isBrowser})}>
         <nav className='nav'>
-          <div>
-            <img src={logo} width="60px" alt="logo" />
+          <img src={logo} width="60px" alt="logo" />
+          <div className='nav-right'>
+            <BrowserView>
+              <ul className='nav-right-ul'>
+                {navList.map(({ name, nodeRef }) => <li onClick={() => handleClickFAQ(nodeRef)} className='nav-right-ul-item' key={name}>{name}</li> )}
+              </ul>
+            </BrowserView>
+            <MobileView>
+              <Menu onClick={handleClickFAQ} data={navList}>
+                <span className='menu-mobile'>...</span>
+              </Menu>
+            </MobileView>
+            
+            {/* <DropMenu>
+              <div><img src={english} width="28px" height="22px" alt="english" /></div>
+            </DropMenu> */}
+          </div>
+        </nav>
+        <div className={classNames('first-section-content', {'first-section-content-mobile': isMobile, 'first-section-content-pc' : isBrowser})}>
+          <h1 ref={homeRef} className={isMobile ? 'title-mobile' : 'title-pc'}>OVO.SPACE METAVERSE</h1>
+          <div className='desc'>
+            <p>ovo (ovo.space) is the industry's frst platform to issue holographic AR-NFT</p>
+            <p>assets and is currently deployed on the BSC and FLOw. The NFT issued by ovo </p>
+            <p>will be delivered as Super Avatars to various Metaverses and GameFi platforms.</p>
+            <p>OVO will be an important content provider for the future Metaverse.</p>
           </div>
           
-        </nav>
-      </section>
-      <section className='header'>
-        <div className='header-content'>
-          <h1>OVO.SPACE METAVERSE</h1>
-          <p>ovo (ovo.space) is the industry's frst platform to issue holographic AR-NFT assets and is currently deployed on the BSC and FLOw. The NFT issued by ovo will be delivered as Super Avatars to various Metaverses and GameFi platforms. OVO will be an important content provider for the future Metaverse.</p>
           <div className='btn-box'>
-            <button className='button'>Enter website on BSC</button>
-            <button className='button'>Enter website on FLow</button>
+            <button className='button'>
+              <img src={bsc} width="18px" height="18px" alt="bsc" />
+              <span>ENTER WEBSITE ON BSC</span>
+            </button>
+            <button className='button'>
+              <img src={bsc} width="18px" height="18px" alt="bsc" />
+              <span>ENTER WEBSITE ON FLOW</span>
+            </button>
           </div>
           <div className='icon-box'>
-            <img src={telegram} width="18px" alt="telegram" />
-            <img src={twitter} width="18px" alt="twitter" />
-            <img src={discord} width="18px" alt="discord" />
+            <a href={telegramUrl} target="_blank"rel="noreferrer">
+              <img src={telegram} width="18px" alt="telegram" />
+            </a>
+            <a href={twitterUrl} target="_blank"rel="noreferrer">
+              <img src={twitter} width="18px" alt="twitter" />
+            </a>
+            <a href={discordUrl} target="_blank"rel="noreferrer">
+              <img src={discord} width="18px" alt="discord" />
+            </a>
+            
           </div>
         </div>
       </section>
@@ -125,33 +212,42 @@ function App() {
       </section>
 
       <section className='forth-section'>
-        <h1>OVO SPACE Metaverse</h1>
+        <h1 ref={metaverseRef}>OVO SPACE Metaverse</h1>
         <div className='content'>
-          <div className='item'>
+          <div className={classNames('item', {'item-mobile': isMobile, 'item-pc' : isBrowser})}>
             <img src={dcim} width="28px" alt="dcim" />
             <h2 className='title'>DCIM</h2>
-            <p className='desc'>This is composed of the lower-level copyright verification and the upper-level asset management mechanism. The lower-level is the copyright-related cooperation and authorization agreement represented by NFT, and the upper-level is the issuance and management circulation mechanism of those NFT assets. NFT is based on ERC721 and ERC1155. </p>
+            <p className='desc'>
+              This is composed of the lower-level copyright verification and the upper-level asset management mechanism. The lower-level is the 
+              copyright-related cooperation and authorization agreement represented by NFT, and the upper-level is the issuance and management
+               circulation mechanism of those NFT assets. NFT is based on ERC721 and ERC1155.
+            </p>
           </div>
-          <div className='item'>
+          <div className={classNames('item', {'item-mobile': isMobile, 'item-pc' : isBrowser})}>
           <img src={ip} width="28px" alt="dcim" />
             <h2 className='title'>IP</h2>
-            <p className='desc'>The OVO platform has a wealth of Japanese IP resources. At present, OVO has issued two NFT products with exclusive contracts.
-Gravure idols NFT were sold out very quickly on FlowFest, and the sales ranked 5th in the entire Flowverse.
-Nyathees (one of the most famous Anime characters, with more than 4 million paid download in Japan). OVO has sold more than 34,000 Nyathees Mystery Boxes.</p>
+            <p className='desc'>The OVO platform has a wealth of Japanese IP resources. At present, OVO has issued two NFT products with exclusive 
+              contracts. Gravure idols NFT were sold out very quickly on FlowFest, and the sales ranked 5th in the entire Flowverse.
+              Nyathees (one of the most famous Anime characters, with more than 4 million paid download in Japan). OVO has sold more than 34,000 
+              Nyathees Mystery Boxes.
+            </p>
           </div>
-          <div className='item'>
+          <div className={classNames('item', {'item-mobile': isMobile, 'item-pc' : isBrowser})}>
           <img src={metaverse} width="28px" alt="dcim" />
             <h2 className='title'>Metaverse</h2>
-            <p className='desc'>Building a true metaverse requires a complete virtual world, time continuity, value transmission, and orderly operation.
-OVO will be a content distribution platform based on NFT technology to provide "value transfer" solutions for various metaverses, and it will also be a "creator metaverse".
-</p>
+            <p className='desc'>
+              Building a true metaverse requires a complete virtual world, time continuity, value transmission, and orderly operation.
+              OVO will be a content distribution platform based on NFT technology to provide "value transfer" solutions for various metaverses,
+              and it will also be a "creator metaverse".
+            </p>
           </div>
         </div>
       </section>
-
+      
+      {/* fifth-section */}
       <section className='fifth-section'>
         <div className='fifth-section-header'>
-          <h1 className='title'>DCIM</h1>
+          <h1 ref={dcimRef}>DCIM</h1>
           <p className='desc'>The dual copyright inspection mechanism (DCIM: Dual Copyright Inspection Mechanism) consists of copyright 
           verification and asset management mechanisms. The underlying logic is the copyright-related cooperation and authorization 
           agreement that binds NFT assets, and the superstructure is the issuance and management circulation mechanism of NFT assets. 
@@ -160,8 +256,8 @@ OVO will be a content distribution platform based on NFT technology to provide "
           </p>
           <img src={dcimbanner} width="100%" alt="dcimbanner" />
         </div>
-        <div className='fifth-section-content'>
-          <h2>AR NFT</h2>
+        <div className={classNames('fifth-section-content', {'fifth-section-content-mobile': isMobile, 'fifth-section-content-pc' : isBrowser})}>
+          <h2 ref={arNftRef}>AR NFT</h2>
           <div className='desc-box'>
             <div className='fifth-section-content-img' ><img src={di1} width="100%" alt="di1" /></div>
             <div>
@@ -175,14 +271,36 @@ OVO will be a content distribution platform based on NFT technology to provide "
             
           </div>
         </div>
+      </section>
+      
+      {/* sixth-section */}
+      <section className='sixth-section'>
+        <h1 ref={roadMapRef} className={classNames('title', {'title-mobile': isMobile, 'title-pc' : isBrowser})}>ROADMAP</h1>
+        <div className='activity-content'>
+          {
+            activityProgressList.map(({date, active, position, info}, index) => {
+              const isLastItem = index + 1 === activityProgressList.length;
 
+              return (
+                <div className="activity">
+                  <span className= {active ? 'circle': 'hollow-circle'}></span>
+                  <span className="time">
+                    {date}
+                    <div className={classNames(`bubble bubble-${position}`, {[`bubble-${position}-mobile`]: isMobile, [`bubble-${position}-pc`] : isBrowser, [`bubble-${position}-active`]: active})}>
+                      <div className={classNames('bubble-text', {'bubble-text-mobile': isMobile, 'bubble-text-pc' : isBrowser})}>{info}</div>
+                    </div>
+                  </span>
+                  { isLastItem ? null : <span className="arrow">----</span> }
+                </div>
+              )
+            })
+          }
+        </div>
       </section>
 
-      <section className='sixth-section'></section>
-
       <section className='seventh-section'>
-        <h1>Partners</h1>
-        <div className='seventh-section-content'>
+        <h1 ref={partnersRef} className={classNames('title', {'title-mobile': isMobile, 'title-pc' : isBrowser})}>PARTNERS</h1>
+        <div className={classNames('seventh-section-content', {'seventh-section-content-mobile': isMobile, 'seventh-section-content-pc' : isBrowser})}>
           {
             PartnersImages.map(image =>  <div><img src={image} width="100%" alt="logo1" /></div>)
           }
@@ -191,7 +309,7 @@ OVO will be a content distribution platform based on NFT technology to provide "
       </section>
 
       <section className='eighth-section'>
-        <h1>FAQ</h1>
+        <h1 ref={faqRef}>FAQ</h1>
         <div className='content'>
           <div className='content-item'>
             <span className='content-item-index'>01</span>
@@ -260,16 +378,24 @@ OVO will be a content distribution platform based on NFT technology to provide "
             <div className='desc'>
               <p>
                 1.Connect BSC wallet to
-                <a href="https://ovobsc.ovo.space/#/collection/nyathees">https://ovobsc.ovo.space/#/collection/nyathees</a>
+                <a href="https://ovobsc.ovo.space/#/collection/nyathees" rel="noreferrer" target="_blank">https://ovobsc.ovo.space/#/collection/nyathees</a>
                 . Ensure you have enough BNB and BUSD in your wallet.
               </p>
-              <p>*More details about how to connect wallet to BSC network</p>
+              <p>*More details about how to connect wallet to BSC network:</p>
+              <p><a href="https://ovobsc.ovo.space/#/collection/nyathees" rel="noreferrer" target="_blank">https://ovobsc.ovo.space/#/collection/nyathees</a></p>
               <div className='group'>
-                <p> 2. You could click here as shown below to get your referral link. Spread it everywhere such as Twitter, Instagram, facebook and other social media.</p>
+                <p>
+                 <span>2. You could click here as shown below to get your referral link. Spread it everywhere such as Twitter, Instagram, facebook 
+                 and other social media.</span>
+                 <img src={tu1} width="100%" alt="tu1" />
+                </p>
               </div>
               <div className='group'>
-                <p>3. If someone buys a Mystery Box through your referral link, the 20% commission of sales automatically shows on the OVO account as below.
-                Remember to often check how much you earn & claim to your wallet. The affiliates' relationship with your customers will be permanent.</p>
+                <p>
+                  <span>3. If someone buys a Mystery Box through your referral link, the 20% commission of sales automatically shows on the OVO account as below.
+                  Remember to often check how much you earn & claim to your wallet. The affiliates' relationship with your customers will be permanent.</span>
+                  <img src={tu2} width="100%" alt="tu2" />
+                </p>
               </div>
             </div>
           </div>
@@ -278,11 +404,11 @@ OVO will be a content distribution platform based on NFT technology to provide "
 
       <footer className='footer'>
         <div className='footer-content'>
-          <img src={discord} width="32px" height="32px" alt="discord" />
-          <img src={telegram} width="32px" height="32px" alt="telegram" />
-          <img src={twitter} width="32px" height="32px" alt="twitter" />
-          <img src={line} width="32px" height="32px" alt="line" />
-          <img src={medium} width="32px" height="32px" alt="medium" />
+          { footerImageList.map(({ imageUrl, link}) => (
+            <a href={link} target="_blank" rel="noreferrer">
+              <img key={imageUrl} src={imageUrl} width="32px" height="32px" alt="images" />
+            </a>
+          ))}
         </div>
         <p>Copyright© 2021 OVO.SPACE. All rights reserved.</p>
       </footer>
